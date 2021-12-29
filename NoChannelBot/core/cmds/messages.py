@@ -1,3 +1,4 @@
+import asyncio
 import json
 
 import aiosqlite
@@ -31,6 +32,14 @@ async def messages(msg: Message):
             try:
                 await msg.chat.ban_sender_chat(sender_chat_id=msg.sender_chat.id)
                 await msg.reply("❗️ Слать сообщения от имени каналов в этой группе - ЗАПРЕЩЕНО")
+
+            except Exception as exc:
+                print(messages.__name__, exc, type(exc).mro())
+
+            await asyncio.sleep(30)
+
+            try:
+                await msg.delete()
 
             except Exception as exc:
                 print(messages.__name__, exc, type(exc).mro())
